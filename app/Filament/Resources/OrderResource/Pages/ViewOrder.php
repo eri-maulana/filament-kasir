@@ -4,11 +4,9 @@ namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-class EditOrder extends EditRecord
+class ViewOrder extends ViewRecord
 {
     protected static string $resource = OrderResource::class;
-
-    
 }

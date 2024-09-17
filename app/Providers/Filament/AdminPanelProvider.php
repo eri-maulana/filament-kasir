@@ -24,6 +24,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->databaseNotifications()
             ->id('admin')
             ->path('/')
             ->login()
@@ -54,6 +55,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->sidebarCollapsibleOnDesktop();
+            ->sidebarCollapsibleOnDesktop()
+            ->viteTheme('resources/css/filament/admin/theme.css');
     }
 }
