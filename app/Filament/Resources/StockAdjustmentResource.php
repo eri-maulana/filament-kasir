@@ -25,12 +25,18 @@ class StockAdjustmentResource extends Resource
             ->schema([
                 Forms\Components\Select::make('product_id')
                     ->relationship('product', 'name')
-                    ->required(),
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->hiddenOn(RelationManagers\StockAdjustmentsRelationManager::class),
                 Forms\Components\TextInput::make('quantity_adjusted')
                     ->required()
                     ->numeric(),
                 Forms\Components\Textarea::make('reason')
                     ->required()
+                    ->maxLength(65535)
+                    ->default('Restock.')
+                    ->placeholder('Write a reason for the stock adjustment')
                     ->columnSpanFull(),
             ]);
     }
@@ -38,28 +44,25 @@ class StockAdjustmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('product.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('quantity_adjusted')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->hiddenOn(RelationManagers\StockAdjustmentsRelationManager::class),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('product_id')
+                    ->relationship('product', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->hiddenOn(RelationManagers\StockAdjustmentsRelationManager::class),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+                    ->color('gray'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
