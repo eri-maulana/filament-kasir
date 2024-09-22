@@ -18,7 +18,7 @@ use App\Filament\Resources\OrderResource\RelationManagers;
 class OrderResource extends Resource
 {
     use \App\Traits\HasNavigationBadge;
-    
+
     protected static ?string $model = Order::class;
 
     protected static ?string $navigationGroup = 'Transactions';
@@ -209,5 +209,12 @@ class OrderResource extends Resource
             TextEntry::make('status')->badge()->color(fn($state) => $state->getColor()),
             TextEntry::make('created_at')->dateTime()->formatStateUsing(fn($state) => $state->format('d M Y H:i'))->color('gray'),
         ]);
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            OrderResource\Widgets\OrderStats::class,
+        ];
     }
 }

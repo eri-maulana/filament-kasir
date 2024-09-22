@@ -9,8 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "awcodes/filament-gravatar": "^2.0",
         "barryvdh/laravel-dompdf": "^3.0",
+        "bezhansalleh/filament-shield": "^3.2",
         "filament/filament": "^3.2",
+        "flowframe/laravel-trend": "^0.2.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9"
     },
